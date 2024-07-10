@@ -1,0 +1,14 @@
+echo doqux #show echo showqux
+
+echo Lorem ipsum dolor sit amat
+echo foo #other
+head -1 /etc/hosts #show echo foo
+echo bar #show echo foo
+function foo() { echo foo } #other
+echo foo #nowait #noanimation
+bindkey '^M' #noanimation
+bindkey "$foo" #nowait #noanimation
+# echo bar
+echo baz
+curl https://www.google.com #wait
+curl google.com #show echo google.com
