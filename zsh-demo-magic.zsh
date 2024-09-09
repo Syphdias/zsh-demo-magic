@@ -1,30 +1,5 @@
 #!/usr/bin/env zsh
-# Issues
-# - Not on line
-# - whitespace matters for "read" and "#"
-# - segement needs to be set before and is p10 specific
-# - no docs
-# - start new shell with separate HIST FILE?
-# - how to package
-# - how to start demo program (source is iffy, do I need it?)
-# - how to fake commands? script?
-# - pause demo
-# - check what happens on ctrl-C, premature enter
-# - no support for multiline
-# - deal with shebang? -> security net if not zsh -> ignore
-# - noop? #show at start?
-# - DEBUG_MODE: don't strip comments
-# - BUG: multiple enter strokes should not send second enter while
-#
-# - FEATURE: +-randomtime (20%) for typing delay
-# - jump to previous command (by index)
-# - start/stop/resume!/end demo
-# - replace secrets in output?
-# - own histfile
-# Test Strings:
-# - $1 foo -bar
-# - "$2" '$3'
-
+# Script to demo some commands
 
 if [[ $ZSH_EVAL_CONTEXT == 'toplevel' ]]; then
     cat << EOHELP
@@ -35,10 +10,10 @@ Initialize:
     source \"${0}\"" [start]
 
 Function Usage:
-    start-zsh-demo  # start or restart 
-    pause-zsh-demo
-    resume-zsh-demo
-    end-zsh-demo
+    zsh-demo-start  # start or restart 
+    zsh-demo-pause
+    zsh-demo-resume
+    zsh-demo-end
 
 Comment augmentations:
   [COMMAND ARGS] [#show FAKECOMMAND] [#[no]wait] [#[no]animation]
@@ -101,7 +76,7 @@ if [[ -n "${POWERLEVEL9K_LEFT_PROMPT_ELEMENTS}" ]]; then
     }
 fi
 
-function start-zsh-demo() {
+function zsh-demo-start() {
     # check if everything is in order
     if [[ ! -e "${ZSH_DEMO_MAGIC_COMMANDS_FILE}" ]]; then
         echo "File \"${ZSH_DEMO_MAGIC_COMMANDS_FILE}\" does not exist " \
@@ -120,9 +95,9 @@ function start-zsh-demo() {
         _ENTER_KEY_BINDING="${_ENTER_KEY_BINDING##* }"
     fi
 
-    # append end-zsh-demo function _ZSH_DEMO_MAGIC_COMMANDS
+    # append zsh-demo-end function _ZSH_DEMO_MAGIC_COMMANDS
     typeset -g _ZSH_DEMO_MAGIC_COMMANDS
-    _ZSH_DEMO_MAGIC_COMMANDS+=("end-zsh-demo #nowait")
+    _ZSH_DEMO_MAGIC_COMMANDS+=("zsh-demo-end #nowait")
 
     # set demo bindkey to Enter key
     bindkey '^M' demo-accept-line
@@ -130,15 +105,15 @@ function start-zsh-demo() {
     _ZSH_DEMO_MAGIC_STATUS=running
 }
 
-function pause-zsh-demo () {
+function zsh-demo-pause () {
     _ZSH_DEMO_MAGIC_STATUS=paused
 }
 
-function resume-zsh-demo () {
+function zsh-demo-resume () {
     _ZSH_DEMO_MAGIC_STATUS=running
 }
 
-function end-zsh-demo() {
+function zsh-demo-end() {
     # restore binding for Enter key
     bindkey '^M' "${_ENTER_KEY_BINDING}"
 
@@ -279,5 +254,5 @@ function demo-accept-line() {
 zle -N demo-accept-line
 
 if [[ "$1" == "start" ]]; then
-    start-zsh-demo
+    zsh-demo-start
 fi
