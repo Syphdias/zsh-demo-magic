@@ -65,10 +65,10 @@ command and the total commands (e.g. `7/42`) and a pause symbol
 `ZSH_DEMO_MAGIC_PAUSED_ICON` that can be configured.
 
 # Tools that Work Great in Conjunction
-- `[fc -p]`: `fc` is builtin command from `zsh` and `-p` can be used to
+- [`fc -p`]: `fc` is builtin command from `zsh` and `-p` can be used to
   temporarily change the history file. Switch back with `fc -P`.
-- `[prenv]`: My own tool to switch through environments
-- `[tmuxinator]`: Create and manage tmux sessions
+- [`prenv`]: My own tool to switch through environments
+- [`tmuxinator`]: Create and manage tmux sessions
 
 # Missing Features, Issues, Limitations
 - prevent restart
@@ -86,6 +86,6 @@ command and the total commands (e.g. `7/42`) and a pause symbol
 [Illya Chekrygin at KubeCon 2023]: https://www.youtube.com/watch?v=2IPf_AyKSsU
 [demo-magic]: https://github.com/paxtonhare/demo-magic
 [p10k]: https://github.com/romkatv/powerlevel10k/blob/master/README.md
-[fc -p]: https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html
-[prenv]: https://github.com/syphdias/prenv
-[tmuxinator]: https://github.com/tmuxinator/tmuxinator
+[`fc -p`]: https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html
+[`prenv`]: https://github.com/syphdias/prenv
+[`tmuxinator`]: https://github.com/tmuxinator/tmuxinator
