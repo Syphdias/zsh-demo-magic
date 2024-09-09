@@ -12,7 +12,7 @@ source the file. However this is not possible as it needs to access variables
 that could not be handed back up to the parent shell. (Or at least it would
 introduce additional complexity, I would like to avoid.)
 
-# How to Use it
+# How to Use It
 Help can be displayed by executing the script directly `zsh zsh-demo-magic.zsh`.
 ```
 % zsh zsh-demo-magic.zsh
