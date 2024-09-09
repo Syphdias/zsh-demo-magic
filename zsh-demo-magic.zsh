@@ -67,20 +67,24 @@ Configuration:
   ZSH_DEMO_MAGIC_ANIMATION_SPEED_CPS_RANDOMNESS
     default: 50; 1 for no randomness; animation speed
   ZSH_DEMO_MAGIC_DEBUG
-    don't strip #comments
+    don't strip #augmentation
 EOHELP
     exit 0
 fi
 
 
+# settings
 typeset -g ZSH_DEMO_MAGIC_COMMANDS_FILE
 typeset -g ZSH_DEMO_MAGIC_ANIMATIONS="${ZSH_DEMO_MAGIC_ANIMATIONS:-true}"
 typeset -g ZSH_DEMO_MAGIC_WAIT="${ZSH_DEMO_MAGIC_WAIT:-true}"
 typeset -g ZSH_DEMO_MAGIC_ANIMATION_SPEED_CPS=10
-typeset -g ZSH_DEMO_MAGIC_ANIMATION_SPEED_CPS_RANDOMNESS=50 # 1 for no randomness
+typeset -g ZSH_DEMO_MAGIC_ANIMATION_SPEED_CPS_RANDOMNESS=50
 typeset -g ZSH_DEMO_MAGIC_DEBUG="${ZSH_DEMO_MAGIC_DEBUG:-false}"
 
+# p10k segement config
+typeset -g ZSH_DEMO_MAGIC_PAUSED_ICON="${ZSH_DEMO_MAGIC_PAUSED_ICON:- 󰏤}"
 
+# state
 typeset -g _ZSH_DEMO_MAGIC_STATUS=stopped
 
 
@@ -90,7 +94,7 @@ if [[ -n "${POWERLEVEL9K_LEFT_PROMPT_ELEMENTS}" ]]; then
         if [[ "${_ZSH_DEMO_MAGIC_STATUS}" != "stopped" && -n "${_ZSH_DEMO_MAGIC_COMMANDS}" && ${_ZSH_DEMO_MAGIC_COMMANDS_INDEX} -le ${#_ZSH_DEMO_MAGIC_COMMANDS} ]]; then
             # FIXME: Make customization of icons more inline with p10k way of doing things
             [[ "${_ZSH_DEMO_MAGIC_STATUS}" == "paused" ]] \
-                && _ZSH_DEMO_MAGIC_PAUSED_ICON=" 󰏤" \
+                && _ZSH_DEMO_MAGIC_PAUSED_ICON="${ZSH_DEMO_MAGIC_PAUSED_ICON}" \
                 || _ZSH_DEMO_MAGIC_PAUSED_ICON=""
             p10k segment -f 197 -t "${_ZSH_DEMO_MAGIC_COMMANDS_INDEX}/${#_ZSH_DEMO_MAGIC_COMMANDS}${_ZSH_DEMO_MAGIC_PAUSED_ICON}"
         fi
