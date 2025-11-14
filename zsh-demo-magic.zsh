@@ -14,6 +14,8 @@ Function Usage:
     zsh-demo-pause
     zsh-demo-resume
     zsh-demo-end
+    zsh-demo-config [-|+a] [-|+w] [-|+d]  # dis-/en+able animation/wait/debug
+                    # arguments also work on zsh-demo-start
 
 Comment augmentations:
   [COMMAND ARGS] [#show FAKECOMMAND] [#[no]wait] [#[no]animation]
@@ -76,6 +78,24 @@ if [[ -n "${POWERLEVEL9K_LEFT_PROMPT_ELEMENTS}" ]]; then
     }
 fi
 
+zsh-demo-config() {
+    while [[ $# -gt 0 ]]; do
+        case "${1[1]}" in
+            "+") enable=true ;;
+            "-") enable=false ;;
+            *) shift; continue ;;
+        esac
+
+        case "${1[2]}" in
+            "a") typeset -g ZSH_DEMO_MAGIC_ANIMATIONS="${enable}" ;;
+            "w") typeset -g ZSH_DEMO_MAGIC_WAIT="${enable}" ;;
+            "d") typeset -g ZSH_DEMO_MAGIC_DEBUG="${enable}" ;;
+            *) shift; continue ;;
+        esac
+        shift
+    done
+}
+
 function zsh-demo-start() {
     # check if everything is in order
     if [[ ! -e "${ZSH_DEMO_MAGIC_COMMANDS_FILE}" ]]; then
@@ -98,6 +118,9 @@ function zsh-demo-start() {
     # append zsh-demo-end function _ZSH_DEMO_MAGIC_COMMANDS
     typeset -g _ZSH_DEMO_MAGIC_COMMANDS
     _ZSH_DEMO_MAGIC_COMMANDS+=("zsh-demo-end #nowait")
+
+    # changing config
+    zsh-demo-config "$@"
 
     # set demo bindkey to Enter key
     bindkey '^M' demo-accept-line
@@ -248,7 +271,8 @@ function demo-accept-line() {
 
     # Press "enter"
     if [[ "${_wait}" == "false" ]]; then
-        zle "${_ENTER_KEY_BINDING}"
+        # zle "${_ENTER_KEY_BINDING}"
+        zle demo-accept-line
     fi
 }
 zle -N demo-accept-line

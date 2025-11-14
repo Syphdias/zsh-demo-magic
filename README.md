@@ -27,6 +27,8 @@ Function Usage:
     zsh-demo-pause
     zsh-demo-resume
     zsh-demo-end
+    zsh-demo-config [-|+a] [-|+w] [-|+d]  # dis-/en+able animation/wait/debug
+                    # arguments also work on zsh-demo-start
 
 Comment augmentations:
   [COMMAND ARGS] [#show FAKECOMMAND] [#[no]wait] [#[no]animation]
@@ -65,10 +67,23 @@ command and the total commands (e.g. `7/42`) and a pause symbol
 `ZSH_DEMO_MAGIC_PAUSED_ICON` that can be configured.
 
 # Tools that Work Great in Conjunction
+
+- any virtual environment, e.g. `uv` for python, or nix, etc.
+- anything managing environments, e.g.
+    - [`prenv`]: My own tool to switch through environments
+    - [`direnv`]: Tool to switch to environment based on current directory
 - [`fc -p`]: `fc` is builtin command from `zsh` and `-p` can be used to
   temporarily change the history file. Switch back with `fc -P`.
-- [`prenv`]: My own tool to switch through environments
 - [`tmuxinator`]: Create and manage tmux sessions
+
+I would recommend you do something to have a single command to setup these
+things:
+
+- virtual environment
+- environment variables (especially secrets)
+- no history, or history with specific commands that might be useful, just in
+  case
+- session manager (if you need it)
 
 # Missing Features, Issues, Limitations
 - prevent restart
@@ -82,10 +97,13 @@ command and the total commands (e.g. `7/42`) and a pause symbol
   workaround: `# echo noop`
 - p10k segment needs to be set beforehand
 - replace sensitive data in output?
+- If you have secrets like `export SECRET=…` in your history you might end up
+  revealing them if you display old history commands (e.g. while typing `e`…)
 
 [Illya Chekrygin at KubeCon 2023]: https://www.youtube.com/watch?v=2IPf_AyKSsU
 [demo-magic]: https://github.com/paxtonhare/demo-magic
 [p10k]: https://github.com/romkatv/powerlevel10k/blob/master/README.md
 [`fc -p`]: https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html
 [`prenv`]: https://github.com/syphdias/prenv
+[`direnv`]: https://github.com/direnv/direnv
 [`tmuxinator`]: https://github.com/tmuxinator/tmuxinator
